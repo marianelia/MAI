@@ -12,7 +12,7 @@ int main(int argc, const char* argv[]) {
 	int count_digit = 0;
 	int number = 0;
 	int result = 0;
-  int f_ch = 1;
+        int f_ch = 1;
 	memset(buf, '\0', MAX_DIGIT_IN_STIRING);
 
 	while (true) {
