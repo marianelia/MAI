@@ -37,7 +37,7 @@ int main(int argc, const char* argv[]){
   
 	switch(pid=fork()) {
  	case -1 : //ошибка при вызове fork()
-		char message[] = "fork error\n";
+		;char message[] = "fork error\n";
         write(STDERR_FILENO, &message, sizeof(message) - 1);
         return 2;
 
