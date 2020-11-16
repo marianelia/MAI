@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.10)
-project(os2 C)
+project(os_lab_2 C)
 
 set(CMAKE_C_STANDARD 11)
 
