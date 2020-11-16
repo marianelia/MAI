@@ -33,7 +33,7 @@ int main(int argc, const char* argv[]) {
 			}
 		}
 		if(c == '\n') {
-      write(STDOUT_FILENO, &result, sizeof(result));
+                        write(STDOUT_FILENO, &result, sizeof(result));
 			result = 0;
 		}
 	}
