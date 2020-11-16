@@ -56,22 +56,22 @@ int main(int argc, const char* argv[]){
         	close(fd[0]);
         	close(fd[1]);
 
-    if (execl("child", "child", (char *) NULL) == -1) {
-         char message[] = "exec error\n";
-         write(STDERR_FILENO, &message, sizeof(message) - 1);
-         return 4;
-	}
+    		if (execl("child", "child", (char *) NULL) == -1) {
+         		char message[] = "exec error\n";
+         		write(STDERR_FILENO, &message, sizeof(message) - 1);
+         		return 4;
+		}
  
  	default : //код родительского процесса
 		close(fd[1]);
         	waitpid(pid, (int *)NULL, 0);
         	int result;
         	while (read(fd[0], &result, sizeof(result))) {
-            	char buff[50];
-            	sprintf(buff, "%d\n", result);
-            	write(STDOUT_FILENO, &buff, strlen(buff));
-        }
-      	close(fd[0]);
-  }
+            		char buff[50];
+            		sprintf(buff, "%d\n", result);
+            		write(STDOUT_FILENO, &buff, strlen(buff));
+        	}
+      		close(fd[0]);
+  	}
     return 0;
 }
