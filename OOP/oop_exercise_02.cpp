@@ -12,14 +12,15 @@
 //должны быть выполнены в виде перегрузки операторов.
 //Необходимо реализовать пользовательский литерал для работы с константами типа Rational.
 
+//пример содержимого тестового файла data.txt:
+//(1,0)
+//(2,4)
 
-#include "stdafx.h"
 #include <iostream>
 #include <string>
 #include <fstream>
 #include <cmath>
 #include <algorithm>
-#include <conio.h>
 
 using namespace std;
 
@@ -52,9 +53,9 @@ public:
 	friend Rational operator-(Rational fraction1, Rational fraction2);
 	friend Rational operator*(Rational fraction1, Rational fraction2);
 	friend Rational operator/(Rational fraction1, Rational fraction2);
-	friend bool		operator==(Rational fraction1, Rational fraction2);
-	friend bool		operator<(Rational fraction1, Rational fraction2);
-	friend bool		operator>(Rational fraction1, Rational fraction2);
+	friend bool	operator==(Rational fraction1, Rational fraction2);
+	friend bool	operator<(Rational fraction1, Rational fraction2);
+	friend bool	operator>(Rational fraction1, Rational fraction2);
 
 private:
 	int a, b;
@@ -150,7 +151,6 @@ int main(){
 	const string path = "data.txt";
 	ifstream input(path);
 	int a1, b1, a2, b2;
-
 	long double d = 34.234556_rounding;
 
 	if (input.is_open()) {		//ввод двух дробей в формате (a,b)
@@ -189,8 +189,6 @@ int main(){
 
 	}
 	else { cout << "ERROR"; }
-
-	_getch();
 
 	return 0;
 }
