@@ -1,20 +1,22 @@
-//Создать класс TimePoint для работы с моментами времени в формате «час:минута:секунда».
-//Обязательными операциями являются : вычисление разницы между двумя моментами времени,
-//сумма моментов времени, сложение момента времени и заданного количества секунд,
-//вычитание из момента времени заданного количества секунд,
-//вычисление во раз сколько один момент времени больше(меньше) другого, сравнение моментов времени,
-//перевод в секунды и обратно, перевод в минуты(с округлением до минуты) и обратно.
+//РЎРѕР·РґР°С‚СЊ РєР»Р°СЃСЃ TimePoint РґР»СЏ СЂР°Р±РѕС‚С‹ СЃ РјРѕРјРµРЅС‚Р°РјРё РІСЂРµРјРµРЅРё РІ С„РѕСЂРјР°С‚Рµ В«С‡Р°СЃ:РјРёРЅСѓС‚Р°:СЃРµРєСѓРЅРґР°В».
+//РћР±СЏР·Р°С‚РµР»СЊРЅС‹РјРё РѕРїРµСЂР°С†РёСЏРјРё СЏРІР»СЏСЋС‚СЃСЏ : РІС‹С‡РёСЃР»РµРЅРёРµ СЂР°Р·РЅРёС†С‹ РјРµР¶РґСѓ РґРІСѓРјСЏ РјРѕРјРµРЅС‚Р°РјРё РІСЂРµРјРµРЅРё,
+//СЃСѓРјРјР° РјРѕРјРµРЅС‚РѕРІ РІСЂРµРјРµРЅРё, СЃР»РѕР¶РµРЅРёРµ РјРѕРјРµРЅС‚Р° РІСЂРµРјРµРЅРё Рё Р·Р°РґР°РЅРЅРѕРіРѕ РєРѕР»РёС‡РµСЃС‚РІР° СЃРµРєСѓРЅРґ,
+//РІС‹С‡РёС‚Р°РЅРёРµ РёР· РјРѕРјРµРЅС‚Р° РІСЂРµРјРµРЅРё Р·Р°РґР°РЅРЅРѕРіРѕ РєРѕР»РёС‡РµСЃС‚РІР° СЃРµРєСѓРЅРґ,
+//РІС‹С‡РёСЃР»РµРЅРёРµ РІРѕ СЂР°Р· СЃРєРѕР»СЊРєРѕ РѕРґРёРЅ РјРѕРјРµРЅС‚ РІСЂРµРјРµРЅРё Р±РѕР»СЊС€Рµ(РјРµРЅСЊС€Рµ) РґСЂСѓРіРѕРіРѕ, СЃСЂР°РІРЅРµРЅРёРµ РјРѕРјРµРЅС‚РѕРІ РІСЂРµРјРµРЅРё,
+//РїРµСЂРµРІРѕРґ РІ СЃРµРєСѓРЅРґС‹ Рё РѕР±СЂР°С‚РЅРѕ, РїРµСЂРµРІРѕРґ РІ РјРёРЅСѓС‚С‹(СЃ РѕРєСЂСѓРіР»РµРЅРёРµРј РґРѕ РјРёРЅСѓС‚С‹) Рё РѕР±СЂР°С‚РЅРѕ.
 
-//тесты находятся в файле data.txt в таком порядке: 1-вый момент времении, 2-ой момент времени, количество секунд, количество минут
-
-//#include "stdafx.h"
-//#include <conio.h>
+//С‚РµСЃС‚С‹ РЅР°С…РѕРґСЏС‚СЃСЏ РІ С„Р°Р№Р»Рµ data.txt РІ С‚Р°РєРѕРј РїРѕСЂСЏРґРєРµ: 1-С‹Р№ РјРѕРјРµРЅС‚ РІСЂРµРјРµРЅРёРё, 2-РѕР№ РјРѕРјРµРЅС‚ РІСЂРµРјРµРЅРё, РєРѕР»РёС‡РµСЃС‚РІРѕ СЃРµРєСѓРЅРґ, РєРѕР»РёС‡РµСЃС‚РІРѕ РјРёРЅСѓС‚
+//РїСЂРёРјРµСЂ С‚РµСЃС‚Р°:
+//22:13:05
+//22:13:05
+//25004
+//1580
 
 #include <string>
 #include <iostream>
 #include <fstream>
 
-#define MAX_SECONDS 86399  //для 24-ого формата времени
+#define MAX_SECONDS 86399  ///РґР»СЏ 24-РѕРіРѕ С„РѕСЂРјР°С‚Р° РІСЂРµРјРµРЅРё
 
 using namespace std;
 
@@ -31,7 +33,7 @@ public:
 
 	int GetInSeconds() const { return seconds; }
 
-	string Get() const {		//получение времени в формате «час:минута:секунда»
+	string Get() const {		
 		return TranslateFromSeconds();
 	}
 
@@ -61,8 +63,6 @@ private:
 	int seconds;
 };
 
-
-//вычисление разницы между двумя моментами времени
 string DifferenceMomentsTimes(const TimePoint& time1, const TimePoint& time2) {
 
 	TimePoint times;
@@ -77,7 +77,6 @@ string DifferenceMomentsTimes(const TimePoint& time1, const TimePoint& time2) {
 	return time_str;
 }
 
-//сумма двух моментов времени
 string SumMomentsTimes(const TimePoint& time1, const TimePoint& time2) {
 
 	TimePoint times;
@@ -90,7 +89,6 @@ string SumMomentsTimes(const TimePoint& time1, const TimePoint& time2) {
 	return time_str;
 }
 
-//вычитание из момента времени заданного количества секунд
 string DifferenceTimesAndSeconds(const TimePoint& time1, int new_seconds) {
 
 	TimePoint times;
@@ -103,7 +101,7 @@ string DifferenceTimesAndSeconds(const TimePoint& time1, int new_seconds) {
 	return time_str;
 }
 
-//сложение момента времени и заданного количества секунд
+
 string SumTimesAndSeconds(const TimePoint& time1, int new_seconds) {
 
 	TimePoint times;
@@ -117,7 +115,6 @@ string SumTimesAndSeconds(const TimePoint& time1, int new_seconds) {
 	return time_str;
 }
 
-//вычисление во раз сколько один момент времени больше (меньше) другого
 string HowManyTimesMore(const TimePoint& time1, const TimePoint& time2) {
 
 	TimePoint times;
@@ -135,7 +132,6 @@ string HowManyTimesMore(const TimePoint& time1, const TimePoint& time2) {
 	return ans;
 }
 
-// сравнение моментов времени
 string ComporisionMomentsTimes(const TimePoint& time1, const TimePoint& time2) {
 
 	TimePoint times;
@@ -149,12 +145,11 @@ string ComporisionMomentsTimes(const TimePoint& time1, const TimePoint& time2) {
 	return "Times are equal";
 }
 
-//перевод из формата момента времени в секунды
 int MomentTimeToSeconds(const TimePoint& time1) {
 	return time1.GetInSeconds();
 }
 
-//перервод из секунд в формат момента времени
+
 string SecondsToMomentTime(int new_seconds) {
 	if (new_seconds > MAX_SECONDS) {
 		return "time overflow";
@@ -165,7 +160,7 @@ string SecondsToMomentTime(int new_seconds) {
 	return time_str;
 }
 
-//перевод из формата момента времени в минуты(с округлением до минуты)
+
 int MomentTimeToMinutes(const TimePoint& time1) {
 	int sec = time1.GetInSeconds();
 	int minutes = sec / 60;
@@ -176,7 +171,7 @@ int MomentTimeToMinutes(const TimePoint& time1) {
 	return minutes;
 }
 
-//перевод из минут в формат момента времени
+
 string MinutesToMomentTime(int new_minutes) {
 	if (new_minutes * 60 > MAX_SECONDS) {
 		return "time overflow";
@@ -204,9 +199,6 @@ bool IsMinOrSec(const int num) {
 
 int main() {
 
-	//setvbuf(stdout, NULL, _IONBF, 0);
-	//setvbuf(stderr, NULL, _IONBF, 0);
-
 	const string path = "data.txt";
 	ifstream input(path);
 	int hours1, minutes1, seconds1, hours2, minutes2, seconds2;
@@ -214,7 +206,7 @@ int main() {
 	/*cin >> hours1 >> minutes1 >> seconds1;
 	cin >> hours2 >> minutes2 >> seconds2;
 	*/
-	if (input.is_open()) {		//ввод двух моментов времени в фоормате «час:минута:секунда»
+	if (input.is_open()) {		
 		input >> hours1;
 		if (!IsHour(hours1)) { cout << "ERROR INPUT"; return 1; }
 		input.ignore(1);
@@ -234,8 +226,8 @@ int main() {
 		if (!IsMinOrSec(seconds2)) { cout << "ERROR INPUT"; return 1; }
 
 
-		input >> sec;		//ввод вромени в секундах
-		input >> min;		//ввод времени в минутах
+		input >> sec;		//РІРІРѕРґ РІСЂРµРјРµРЅРё РІ СЃРµРєСѓРЅРґР°С…
+		input >> min;		//РІРІРѕРґ РІСЂРµРјРµРЅРё РІ РјРёРЅСѓС‚Р°С…
 
 		TimePoint time1(hours1, minutes1, seconds1);
 		TimePoint time2(hours2, minutes2, seconds2);
@@ -257,8 +249,6 @@ int main() {
 		cout << MinutesToMomentTime(min)			 << " - Conversion of minutes to time" << endl;
 	}
 	else { cout << "ERROR"; }
-
-	//_getch();
 
 	return 0;
 }
