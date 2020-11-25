@@ -1,0 +1,145 @@
+//#include "stdafx.h"
+#include <stdio.h>
+#include <math.h>
+#include <cmath>
+//#include <conio.h>
+
+const double delta = 0.00000001;
+
+struct f_result {
+	int success;
+	double x;
+	int iteration;
+};
+
+typedef struct f_result f_result;
+typedef double (*func)(double);
+
+double max(double a, double b) {
+	if (a > b) return a;
+	return b;
+}
+
+double abs_f(double a) {
+	if (a < 0) return -a;
+	return a;
+}
+
+f_result dichotomia(func f, double a, double b) {
+	double c;
+	fun_result res;
+	res.iteration = 0;
+	res.success = 0;
+	while (b - a > delta) {
+		c = (a + b) / 2;
+		res.iteration++;
+
+		if (f(a) * f(b) > 0) return res;
+
+		if (f(a) * f(c) < 0) {
+			b = c;
+		}
+		else {
+			a = c;
+		}
+	}
+	res.x = (a + b) / 2;
+	res.success = 1;
+	return res;
+}
+
+double df(func f, double x) {
+	double h = pow(2, -26) * max(abs_f(x), 1);
+	double prf = f(x + h) - f(x - h);
+	return prf / (2 * h);
+}
+
+double ddf(func f, double x) {
+	double h = pow(2, -12) * max(abs_f(x), 1);
+	double prf = (f(x + h) - 2 * f(x) + f(x - h)) / (h * h);
+	return prf;
+}
+
+f_result Newton(func f, const double a, const double b) {
+	double pre_x, x = (a + b) / 2;
+	f_result res;
+	res.iteration = 0;
+	res.success = 0;
+	do {
+		if (abs_f(f(x) * ddf(f, x)) >= df(f, x) * df(f, x)) return res;
+		pre_x = x;
+		x -= f(x) / df(f, x);
+		res.iteration+=1;
+	} while (abs_f(pre_x - x) > delta);
+	res.x = x;
+	res.success = 1;
+	return res;
+}
+
+f_result iterations(func f, const double a, const double b) {
+	double xp, x = (a + b) / 2;
+	f_result res;
+	res.iteration = 0;
+	res.success = 0;
+	do {
+		if (abs_f(df(f, x)) >= 1) return res;
+		xp = x;
+		x = f(x);
+		res.iteration+=1;
+	} while (abs_f(xp - x) > delta);
+	res.x = x;
+	res.success = 1;
+	return res;
+}
+
+double f23(double x){
+	return 3*x - 4*log(x)-5;
+}
+
+double f24(double x){
+	return  cos(2/x)- 2*sin(1/x)+1/x;
+}
+double f23_for_iterat(double x){
+	return x-0.5*f23(x);
+}
+
+double f24_for_iterat(double x){
+	return x-0.5*f24(x);
+}
+
+
+void print_function(func f, func fi, double a, double b) {
+	f_result res = dichotomia(f, a, b);
+	if (res.success == 1) {
+		printf("dichotomia = %.7lf  n = %d\n", res.x, res.iteration);
+	}
+	else {
+		printf("dichotomia is not applicable  \n");
+	}
+
+	res = Newton(f, a, b);
+	if (res.success == 1) {
+		printf("newton = %.7lf  n = %d\n", res.x, res.iteration);
+	}
+	else {
+		printf("newton is not applicable\n");
+	}
+
+	res = iterations(fi, a, b);
+	if (res.success == 1) {
+		printf("iterations = %.7lf  n = %d\n\n", res.x, res.iteration);
+	}
+	else {
+		printf("iter is not applicable\n\n");
+	}
+}
+
+int main() {
+	printf("F23\n");
+	print_function(f23, f23_for_iterat, 2, 4);
+
+	printf("F24\n");
+	print_function(f24, f24_for_iterat, 1, 2);
+//	_getch();
+	return 0;
+}
