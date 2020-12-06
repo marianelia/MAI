@@ -21,7 +21,7 @@ void* tread_count(void* arg){
 }
 
 int main(int argc, char *argv[]){
-    int number_of_treads;
+    int number_of_treads = 0;
     char string_number_of_treads[10];
 	if (argc == 1) {
 		printf("Enter number of treads: \n");
