@@ -1,11 +1,3 @@
-// Лагуткина Мария, М8О-206Б-19
-//Вариант 10: фигуры квадрат, прямоугольник, трапеция
-//Разработать шаблоны классов согласно варианту задания.  
-//Параметром шаблона должен являться скалярный тип данных задающий тип данных для оси координат. 
-//Классы должны иметь только публичные поля. В классах не должно быть методов, только поля. 
-//Фигуры являются фигурами вращения (равнобедренными), за исключением трапеции и прямоугольника. 
-//Для хранения координат фигур необходимо использовать шаблон  std::pair.
-
 
 #include "stdafx.h"
 #include <conio.h>
@@ -139,12 +131,12 @@ void area(const tuple<Elements...> t) {
 }
 
 template<class T>
-double lenght(vertex_t<T>& a, vertex_t<T>& b) {       //вычисление длины стороны
+double lenght(vertex_t<T>& a, vertex_t<T>& b) {       //ГўГ»Г·ГЁГ±Г«ГҐГ­ГЁГҐ Г¤Г«ГЁГ­Г» Г±ГІГ®Г°Г®Г­Г»
     return sqrt((b.first - a.first)*(b.first - a.first) + ((b.second - a.second)*(b.second - a.second)));
 }
 
 template<class T>
-int CorrectInput(pair<T, T>& a, pair<T, T>& b, pair<T, T>& c, pair<T, T>& d, int f) {      //проверка коректности введенной фигуры
+int CorrectInput(pair<T, T>& a, pair<T, T>& b, pair<T, T>& c, pair<T, T>& d, int f) {      //ГЇГ°Г®ГўГҐГ°ГЄГ  ГЄГ®Г°ГҐГЄГІГ­Г®Г±ГІГЁ ГўГўГҐГ¤ГҐГ­Г­Г®Г© ГґГЁГЈГіГ°Г»
     if ((a.first == c.first && a.second == c.second) || (b.first == d.first && b.second == d.second)) {
         return 1;
     }
@@ -154,7 +146,7 @@ int CorrectInput(pair<T, T>& a, pair<T, T>& b, pair<T, T>& c, pair<T, T>& d, int
     double len_da = lenght(d, a);
     double len_ac = lenght(a, c);
     double len_bd = lenght(b, d);
-    //проверка коректности квадрата: равенсво строн и диагоналей
+    //ГЇГ°Г®ГўГҐГ°ГЄГ  ГЄГ®Г°ГҐГЄГІГ­Г®Г±ГІГЁ ГЄГўГ Г¤Г°Г ГІГ : Г°Г ГўГҐГ­Г±ГўГ® Г±ГІГ°Г®Г­ ГЁ Г¤ГЁГ ГЈГ®Г­Г Г«ГҐГ©
     if (f == 1) {
         if (abs(len_cd - len_ab)<numeric_limits<double>::epsilon() &&
             abs(len_cd - len_bc)<numeric_limits<double>::epsilon() &&
@@ -164,7 +156,7 @@ int CorrectInput(pair<T, T>& a, pair<T, T>& b, pair<T, T>& c, pair<T, T>& d, int
         }
         return 1;
     }
-    //проверка коректности прямоугольника: равенсво противоположных сторон и диагоналей
+    //ГЇГ°Г®ГўГҐГ°ГЄГ  ГЄГ®Г°ГҐГЄГІГ­Г®Г±ГІГЁ ГЇГ°ГїГ¬Г®ГіГЈГ®Г«ГјГ­ГЁГЄГ : Г°Г ГўГҐГ­Г±ГўГ® ГЇГ°Г®ГІГЁГўГ®ГЇГ®Г«Г®Г¦Г­Г»Гµ Г±ГІГ®Г°Г®Г­ ГЁ Г¤ГЁГ ГЈГ®Г­Г Г«ГҐГ©
     if (f == 2) {
         if (abs(len_ab - len_cd)<numeric_limits<double>::epsilon() &&
             abs(len_bc - len_da)<numeric_limits<double>::epsilon() &&
@@ -173,7 +165,7 @@ int CorrectInput(pair<T, T>& a, pair<T, T>& b, pair<T, T>& c, pair<T, T>& d, int
         }
         return 1;
     }
-    //проверка коректности равнобедренной трапеции: равенсво боковых строн и диагоналей
+    //ГЇГ°Г®ГўГҐГ°ГЄГ  ГЄГ®Г°ГҐГЄГІГ­Г®Г±ГІГЁ Г°Г ГўГ­Г®ГЎГҐГ¤Г°ГҐГ­Г­Г®Г© ГІГ°Г ГЇГҐГ¶ГЁГЁ: Г°Г ГўГҐГ­Г±ГўГ® ГЎГ®ГЄГ®ГўГ»Гµ Г±ГІГ°Г®Г­ ГЁ Г¤ГЁГ ГЈГ®Г­Г Г«ГҐГ©
     if (f == 3) {
         if (abs(len_ab - len_cd)<numeric_limits<double>::epsilon() &&
             abs(len_ac - len_bd)<numeric_limits<double>::epsilon()) {
