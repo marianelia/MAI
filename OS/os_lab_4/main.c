@@ -50,6 +50,7 @@ int main(int argc, const char* argv[]){
         	close(fd);
         	return 1;
 		}
+	//доступ к памяти, где лежит массив сумм строк
         buf_sum *addr = mmap(NULL, SHARED_MEMORY_OBJECT_SIZE, PROT_READ, MAP_SHARED, fd, 0);
 		if(addr == (void *)-1){
 			char message[] = "Mmap error\n";
