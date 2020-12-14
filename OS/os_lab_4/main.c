@@ -1,3 +1,4 @@
+
 #include <sys/mman.h>
 #include <sys/wait.h>
 #include <stdlib.h>
@@ -10,7 +11,7 @@
 
 #define MEMORY_NAME "lab4_shared_memory"
 #define SHARED_MEMORY_OBJECT_SIZE 2048
-#define BUFFER_SIZE	50
+#define BUFFER_SIZE	256
 
 typedef struct buf_sum {
     int buf[BUFFER_SIZE];
@@ -28,7 +29,7 @@ int main(int argc, const char* argv[]){
         	return 2;
 
  	case 0 : //это код потомка
-        execl("child1", "child1", argc == 2 ? argv[1] : (char *)NULL, (char *)NULL); 
+        execl("child", "child", argc == 2 ? argv[1] : (char *)NULL, (char *)NULL); 
         perror("Can't execute child\n");
         exit(1);
  	default : //код родительского процесса
