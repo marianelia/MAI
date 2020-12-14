@@ -1,15 +1,15 @@
 test1.txt
 1 2 3
 4 -3
-maria@maria-MS-7817:~/project/os4$ ./prog test.txt
+maria@maria-MS-7817:~/project/os4$ ./prog test1.txt
 6
 1
 test2.txt
 
-maria@maria-MS-7817:~/project/os4$ ./prog test.txt
+maria@maria-MS-7817:~/project/os4$ ./prog test2.txt
 0
 test3.txt
-maria@maria-MS-7817:~/project/os4$ ./prog test.txt
+maria@maria-MS-7817:~/project/os4$ ./prog test3.txt
 42
 9
 -23
@@ -17,3 +17,6 @@ maria@maria-MS-7817:~/project/os4$ ./prog test.txt
 test4.txt
 2 -4 -2
 1-1
+maria@maria-MS-7817:~/project/os4$ ./prog test4.txt
+Incorrect input in 2 line
+-4
