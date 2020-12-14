@@ -1,3 +1,4 @@
+
 #include <unistd.h>
 #include <stdbool.h>
 #include <string.h>
@@ -28,6 +29,7 @@ void sum_lines(FILE *input, buf_sum *addr){
 	int number = 0;
 	int result = 0;
 	//int f_not_left_minus = 0;
+    int count_line = 0;
 	int f_ch = 1;
     addr->size = 0;
 
@@ -41,8 +43,11 @@ void sum_lines(FILE *input, buf_sum *addr){
 		if (isdigit(c) || c == '-') {
 			if (c == '-' && count_digit  > 0){	
 				//f_not_left_minus = 1;
-                perror("incorrect input\n");
-                exit(-1);
+                char message[] = "Incorrect input in ";
+                fprintf(stderr, "%s", message);
+                count_line ++;
+                fprintf(stderr, "%d line\n", count_line);
+                return;
 			}
 			buf[count_digit] = c;
 			count_digit++;
@@ -59,6 +64,7 @@ void sum_lines(FILE *input, buf_sum *addr){
 		if(c == '\n') {
             addr->buf[addr->size++] = result;
 			result = 0;
+            count_line++;
 		}
 	}
 }
