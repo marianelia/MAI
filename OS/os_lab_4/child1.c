@@ -27,7 +27,7 @@ void sum_lines(FILE *input, buf_sum *addr){
 	int count_digit = 0;
 	int number = 0;
 	int result = 0;
-	int f_not_left_minus = 0;
+	//int f_not_left_minus = 0;
 	int f_ch = 1;
     addr->size = 0;
 
@@ -40,7 +40,7 @@ void sum_lines(FILE *input, buf_sum *addr){
 		}
 		if (isdigit(c) || c == '-') {
 			if (c == '-' && count_digit  > 0){	
-				f_not_left_minus = 1;
+				//f_not_left_minus = 1;
                 perror("incorrect input\n");
                 exit(-1);
 			}
