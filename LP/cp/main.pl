@@ -1,13 +1,6 @@
+%тут располагаются факты о родстве по дереву в виде:
 parents('Maria Lagutkina','Sergey Lagutkin','Nataliia Lagutkina').
-parents('Sergey Lagutkin','Alexander Lagutkin','Tatiana Lagutkina').
-parents('Nataliia Lagutkina','Vitalii Namestnikov','Tatiana Namestnikova').
-parents('Tatiana Lagutkina','Ilia Vasiliev','Ideia Vasilieva').
-parents('Alexander Namesnikov','Vitalii Namestnikov','Tatiana Namestnikova').
-parents('Natalia Namestnikova','Alexander Namesnikov','Nataliia Namestnikova').
-parents('Alexander Vasiliev','Ilia Vasiliev','Ideia Vasilieva').
-parents('Andrey Vasiliev','Alexander Vasiliev','Alexandra Vasilieva').
-parents('Pavel Vasiliev','Alexander Vasiliev','Alexandra Vasilieva').
-parents('Artem Vasiliev','Andrey Vasiliev','Elena Vasilieva').
+
 
 sibling_1(X,Y) :- parents(X,A,B),parents(Y,A,B), X\=Y.
 sibling_2(C,D) :- parents(C,X,_),parents(D,Y,_),sibling_1(X,Y).
