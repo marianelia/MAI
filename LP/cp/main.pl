@@ -1,5 +1,5 @@
 %тут располагаются факты о родстве по дереву в виде:
-parents('Maria Lagutkina','Sergey Lagutkin','Nataliia Lagutkina').
+parents('потомок', 'отец', 'мать').
 
 
 sibling_1(X,Y) :- parents(X,A,B),parents(Y,A,B), X\=Y.
