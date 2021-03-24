@@ -4,7 +4,8 @@
 #include <iomanip>
 #include <string>
 
-namespace super_alg {
+
+namespace NSuperAlg {
 
     class TSuperAlg {
     public:
@@ -17,10 +18,10 @@ namespace super_alg {
         }
         TSuperAlg(int n){
             if (n < BASE)
-                _data.push_back(n);
+                data.push_back(n);
             else {
                 for (; n; n /= BASE)
-                    _data.push_back(n % BASE);
+                    data.push_back(n % BASE);
             }
         }
         void Initialize(const std::string &str);
@@ -32,17 +33,15 @@ namespace super_alg {
         TSuperAlg operator-(const TSuperAlg &rhs);
         TSuperAlg operator*(const TSuperAlg &rhs) const;
         TSuperAlg operator/(const TSuperAlg &rhs);
-        //TSuperAlg const operator^(TSuperAlg &rhs);
         TSuperAlg Power(int r);
         bool operator<(const TSuperAlg &rhs) const;
         bool operator==(const TSuperAlg &rhs) const;
 
     private:
         void DeleteLeadingZeros();
-        std::vector<int32_t> _data;
+        std::vector<int32_t> data;
     };
 
-    //using bigInt_t = uint64_t;
     using bigInt_t = TSuperAlg;
 
 
@@ -50,37 +49,33 @@ namespace super_alg {
         int size = static_cast<int>(str.size());
         for (int i = size - 1; i >= 0; i = i - TSuperAlg::RADIX) {
             if (i < TSuperAlg::RADIX) {
-                _data.push_back(static_cast<int32_t>(atoll(str.substr(0, i + 1).c_str()))); 
+                data.push_back(static_cast<int32_t>(atoll(str.substr(0, i + 1).c_str()))); 
             }
             else { 
-                _data.push_back(static_cast<int32_t>(atoll(str.substr(i - TSuperAlg::RADIX + 1, TSuperAlg::RADIX).c_str()))); 
+                data.push_back(static_cast<int32_t>(atoll(str.substr(i - TSuperAlg::RADIX + 1, TSuperAlg::RADIX).c_str()))); 
             }
         }
         DeleteLeadingZeros();
     }
 
-    // 159
-    //  44
-    // ---
-    // 203
     TSuperAlg TSuperAlg::operator+(const TSuperAlg &rhs){
         TSuperAlg res;
         int32_t carry = 0;
-        size_t n = std::max(rhs._data.size(), _data.size());
-        res._data.resize(n);
+        size_t n = std::max(rhs.data.size(), data.size());
+        res.data.resize(n);
         for (size_t i = 0; i < n; ++i) {
             int32_t sum = carry;
-            if (i < rhs._data.size()) {
-                sum += rhs._data[i];
+            if (i < rhs.data.size()) {
+                sum += rhs.data[i];
             }
-            if (i < _data.size()) {
-                sum += _data[i];
+            if (i < data.size()) {
+                sum += data[i];
             }
             carry = sum / TSuperAlg::BASE;
-            res._data[i] = sum % TSuperAlg::BASE;
+            res.data[i] = sum % TSuperAlg::BASE;
         }
         if (carry != 0) {
-            res._data.push_back(1);
+            res.data.push_back(1);
         }
         res.DeleteLeadingZeros();
         return res;
@@ -89,12 +84,12 @@ namespace super_alg {
     TSuperAlg TSuperAlg::operator-(const TSuperAlg &rhs){
         TSuperAlg res;
         int32_t carry = 0;
-        size_t n = std::max(rhs._data.size(), _data.size());
-        res._data.resize(n + 1, 0);
+        size_t n = std::max(rhs.data.size(), data.size());
+        res.data.resize(n + 1, 0);
         for (size_t i = 0; i < n; ++i) {
-            int32_t diff = _data[i] - carry;
-            if (i < rhs._data.size()) {
-                diff -= rhs._data[i];
+            int32_t diff = data[i] - carry;
+            if (i < rhs.data.size()) {
+                diff -= rhs.data[i];
             }
 
             carry = 0;
@@ -102,26 +97,26 @@ namespace super_alg {
                 carry = 1;
                 diff += TSuperAlg::BASE;
             }
-            res._data[i] = diff % TSuperAlg::BASE;
+            res.data[i] = diff % TSuperAlg::BASE;
         }
         res.DeleteLeadingZeros();
         return res;
     }
 
     TSuperAlg TSuperAlg::operator*(const TSuperAlg & rhs) const {
-        size_t n = _data.size() * rhs._data.size();
+        size_t n = data.size() * rhs.data.size();
         TSuperAlg res;
-        res._data.resize(n + 1);
+        res.data.resize(n + 1);
 
         int k = 0;
         int r = 0;
-        for (size_t i = 0; i < _data.size(); ++i){
-            for (size_t j = 0; j < rhs._data.size(); ++j)
+        for (size_t i = 0; i < data.size(); ++i){
+            for (size_t j = 0; j < rhs.data.size(); ++j)
             {
-                k = rhs._data[j] * _data[i] + res._data[i + j];
+                k = rhs.data[j] * data[i] + res.data[i + j];
                 r = k / TSuperAlg::BASE;
-                res._data[i + j + 1] = res._data[i + j + 1] + r;
-                res._data[i + j] = k % TSuperAlg::BASE;
+                res.data[i + j + 1] = res.data[i + j + 1] + r;
+                res.data[i + j] = k % TSuperAlg::BASE;
             }
         }
         res.DeleteLeadingZeros();
@@ -130,12 +125,12 @@ namespace super_alg {
 
     TSuperAlg TSuperAlg::operator/(const TSuperAlg &rhs) {
         TSuperAlg res, cv = TSuperAlg(0);
-        res._data.resize(_data.size());
+        res.data.resize(data.size());
 
-        for (int i = (int)_data.size() - 1; i >= 0; --i) {
-            cv._data.insert(cv._data.begin(), _data[i]);
-            if (!cv._data.back())
-                cv._data.pop_back();
+        for (int i = (int)data.size() - 1; i >= 0; --i) {
+            cv.data.insert(cv.data.begin(), data[i]);
+            if (!cv.data.back())
+                cv.data.pop_back();
             int x = 0, l = 0, r = BASE;
             while (l <= r) {
                 int m = (l + r) / 2;
@@ -148,7 +143,7 @@ namespace super_alg {
                     r = m - 1;
                 }
             }
-            res._data[i] = x;
+            res.data[i] = x;
             cv = cv - rhs * TSuperAlg(std::to_string(x));
         }
         res.DeleteLeadingZeros();
@@ -168,25 +163,25 @@ namespace super_alg {
     }
 
     bool TSuperAlg::operator<(const TSuperAlg &rhs) const {
-        if (_data.size() != rhs._data.size()) {
-            return _data.size() < rhs._data.size();
+        if (data.size() != rhs.data.size()) {
+            return data.size() < rhs.data.size();
         }
 
-        for (int32_t i = _data.size() - 1; i >= 0; --i) {
-            if (_data[i] != rhs._data[i]) {
-                return _data[i] < rhs._data[i];
+        for (int32_t i = data.size() - 1; i >= 0; --i) {
+            if (data[i] != rhs.data[i]) {
+                return data[i] < rhs.data[i];
             }
         }
         return false;
     }
 
     bool TSuperAlg::operator==(const TSuperAlg &rhs) const {
-        if (_data.size() != rhs._data.size()) {
+        if (data.size() != rhs.data.size()) {
             return false;
         }
 
-        for (int32_t i = _data.size() - 1; i >= 0; --i) {
-            if (_data[i] != rhs._data[i]) {
+        for (int32_t i = data.size() - 1; i >= 0; --i) {
+            if (data[i] != rhs.data[i]) {
                 return false;
             }
         }
@@ -194,8 +189,8 @@ namespace super_alg {
     }
 
     void TSuperAlg::DeleteLeadingZeros(){
-        while (!_data.empty() && _data.back() == 0) {
-            _data.pop_back(); 
+        while (!data.empty() && data.back() == 0) {
+            data.pop_back(); 
         }
     }
 
@@ -207,33 +202,31 @@ namespace super_alg {
     }
 
     std::ostream& operator<<(std::ostream &out, const TSuperAlg &rhs) {
-        if (rhs._data.empty()) {
+        if (rhs.data.empty()) {
             out << "0";
             return out;
         }
-        //  0   1
-        // [1] [2]  -> 2 01
-        out << rhs._data.back();
-        for (int i = rhs._data.size() - 2; i >= 0; --i) {
-            out << std::setfill('0') << std::setw(TSuperAlg::RADIX) << rhs._data[i];
+        out << rhs.data.back();
+        for (int i = rhs.data.size() - 2; i >= 0; --i) {
+            out << std::setfill('0') << std::setw(TSuperAlg::RADIX) << rhs.data[i];
         }
         return out;
     }
 
-} // namespace super_alg
+} // namespace NSuperAlg
 
 
 
 int main(){
     std::string strNum1, strNum2;
-    super_alg::bigInt_t zero("0");
-    super_alg::bigInt_t one("1");
+    NSuperAlg::bigInt_t zero("0");
+    NSuperAlg::bigInt_t one("1");
     char action;
     while (std::cin >> strNum1 >> strNum2 >> action) {
-        super_alg::bigInt_t num1(strNum1);
-        super_alg::bigInt_t num2(strNum2);
+        NSuperAlg::bigInt_t num1(strNum1);
+        NSuperAlg::bigInt_t num2(strNum2);
         if (action == '+') {
-            super_alg::bigInt_t res = num1 + num2;
+            NSuperAlg::bigInt_t res = num1 + num2;
             std::cout << res << "\n";
         }
         else if (action == '-') {
@@ -241,11 +234,11 @@ int main(){
                 std::cout << "Error\n";
                 continue;
             }
-            super_alg::bigInt_t res = num1 - num2;
+            NSuperAlg::bigInt_t res = num1 - num2;
             std::cout << res << "\n";
         }
         else if (action == '*') {
-            super_alg::bigInt_t res = num1 * num2;
+            NSuperAlg::bigInt_t res = num1 * num2;
             std::cout << res << "\n";
         }
         else if (action == '/') {
@@ -253,7 +246,7 @@ int main(){
                 std::cout << "Error\n";
                 continue;
             }
-            super_alg::bigInt_t res = num1 / num2;
+            NSuperAlg::bigInt_t res = num1 / num2;
             std::cout << res << "\n";
         }
         else if (action == '^') {
@@ -270,7 +263,7 @@ int main(){
                 std::cout << "1" << "\n";
             }
             else {
-                super_alg::bigInt_t  res = num1.Power(std::stoi(strNum2));
+                NSuperAlg::bigInt_t  res = num1.Power(std::stoi(strNum2));
                 std::cout << res << "\n";
             }
         }
