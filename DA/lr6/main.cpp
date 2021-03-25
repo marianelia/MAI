@@ -129,8 +129,9 @@ namespace NSuperAlg {
 
         for (int i = (int)data.size() - 1; i >= 0; --i) {
             cv.data.insert(cv.data.begin(), data[i]);
-            if (!cv.data.back())
+            if (!cv.data.back()) {
                 cv.data.pop_back();
+            }
             int x = 0, l = 0, r = BASE;
             while (l <= r) {
                 int m = (l + r) / 2;
@@ -153,9 +154,10 @@ namespace NSuperAlg {
 
     TSuperAlg TSuperAlg::Power(int p){
         TSuperAlg res(1);
-        while (p) {
-            if (p % 2 == 1)
+        while (p > 0) {
+            if (p % 2 == 1){
                 res = res * (*this);
+            }
             (*this) = (*this) * (*this);
             p /= 2;
         }
@@ -166,7 +168,6 @@ namespace NSuperAlg {
         if (data.size() != rhs.data.size()) {
             return data.size() < rhs.data.size();
         }
-
         for (int32_t i = data.size() - 1; i >= 0; --i) {
             if (data[i] != rhs.data[i]) {
                 return data[i] < rhs.data[i];
@@ -179,7 +180,6 @@ namespace NSuperAlg {
         if (data.size() != rhs.data.size()) {
             return false;
         }
-
         for (int32_t i = data.size() - 1; i >= 0; --i) {
             if (data[i] != rhs.data[i]) {
                 return false;
