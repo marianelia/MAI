@@ -4,9 +4,7 @@
 #include <iomanip>
 #include <string>
 
-
 namespace NSuperAlg {
-
     class TSuperAlg {
     public:
         static const int BASE = 10000;
@@ -110,9 +108,8 @@ namespace NSuperAlg {
 
         int k = 0;
         int r = 0;
-        for (size_t i = 0; i < data.size(); ++i){
-            for (size_t j = 0; j < rhs.data.size(); ++j)
-            {
+        for (size_t i = 0; i < data.size(); ++i) {
+            for (size_t j = 0; j < rhs.data.size(); ++j) {
                 k = rhs.data[j] * data[i] + res.data[i + j];
                 r = k / TSuperAlg::BASE;
                 res.data[i + j + 1] = res.data[i + j + 1] + r;
@@ -212,10 +209,7 @@ namespace NSuperAlg {
         }
         return out;
     }
-
 } // namespace NSuperAlg
-
-
 
 int main(){
     std::string strNum1, strNum2;
