@@ -94,6 +94,6 @@ In[250]:= (*9. Асимптоты*)
 (*из п.8 x=1 и y=0 являются ассимптами функции. В наличие ассимптоты можно убедиься и применив функцию:*)
 ResourceFunction["Asymptotes"][f[x], x, y]
 g1 = Plot[f[x], {x, -1, 10}, PlotStyle->Blue];
-g3 = Graphics[{Red,Line[{{-1,0}, {10,0}}]}];
+g2 = Graphics[{Red,Line[{{-1,0}, {10,0}}]}];
 g3 = Graphics[{Red,Line[{{1,-1}, {1,2}}]}];
 Show[{g1, g2,g3}]
