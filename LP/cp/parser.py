@@ -55,7 +55,7 @@ try:
                 for k in range(j+1, len(fams)-1):
                     if (fams[k] == fams[j]) & ((fams[k] != '-1') | (fams[j] != '-1')):
                         if (sex[k] == 'M'):
-                            c_name = '\''+name[i] + ' ' + surname[i] + '\''
+                            c_name = '\'' + name[i] + ' ' + surname[i] + '\''
                             f_name = '\'' + name[k] + ' ' + surname[k] + '\''
                             m_name = '\'' + name[j] + ' ' + surname[j] + '\''
                             out.write('parents('+ c_name + ',' + f_name + ','+ m_name + ').\n')
