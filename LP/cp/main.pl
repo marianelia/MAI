@@ -12,10 +12,10 @@ sibling_3(E,F) :- parents(E,_,C),parents(F,D,_),sibling_2(C,D).
 sibling_3(E,F) :- parents(E,C,_),parents(F,_,D),sibling_2(C,D).
 sibling_3(E,F) :- parents(E,_,C),parents(F,_,D),sibling_2(C,D).
 
-sex_list('Maria Lagutkina', f).
-sex_list('Natalia Namestnikova', f).
-sex_list('Artem Vasiliev', m).
-sex_list('Pavel Vasiliev', m).
+sex_list('Maria L', f).
+sex_list('Natalia N', f).
+sex_list('Artem V', m).
+sex_list('Pavel V', m).
 
 sex(X,m):-(parents(_,X,_);sex_list(X,m)),!.
 sex(X,f):-(parents(_,_,X);sex_list(X,f)),!.
