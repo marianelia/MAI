@@ -14,20 +14,17 @@ class TrieNode {
 private:
     std::map<uint8_t, TrieNode*> path;
     uint32_t code;
-
 public:
     friend class Trie;
     TrieNode( uint32_t num):code(num) {}
     void Clear();
     virtual ~TrieNode();
-    
 };
 
 class Trie {
 private:
     TrieNode* currentNode;
     std::vector<TrieNode*> path;
-
 public:
     Trie() :
         path(0xff + 1), //255
@@ -80,16 +77,14 @@ void Trie::Clear() {
         node->Clear();
     }
 }
-
-    uint32_t Trie::GetCode(std::string& str) {
+uint32_t Trie::GetCode(std::string& str) {
         TrieNode* currNode = path[(uint8_t)str[0]];
         for (int i = 1; i < str.length(); ++i)  {
             currNode = currNode->path[(uint8_t)str[i]];
         }
         return currNode->code;
-    }
-
-    TrieNode* Trie::CheckWord(uint8_t sym) {
+}
+TrieNode* Trie::CheckWord(uint8_t sym) {
         if (currentNode) {
             if (currentNode->path.count(sym)) {
                 currentNode = currentNode->path[sym];
@@ -100,9 +95,9 @@ void Trie::Clear() {
             currentNode = this->path[sym];
         }
         return currentNode;
-    }
+}
 
-    void Trie::AddWord(std::string & str) {
+void Trie::AddWord(std::string & str) {
         TrieNode* currNode = path[(uint8_t)str[0]];
         for (int i = 1; i < str.length() - 1; ++i)  {
             currNode = currNode->path[(uint8_t)str[i]];
@@ -113,12 +108,12 @@ void Trie::Clear() {
             ++codeLen;
         }
         ++maxCode;
-    }
-    Trie::~Trie() {
+}
+Trie::~Trie() {
         for (TrieNode* node : path){
             delete node;
         }
-    }
+}
 
 /////////////////////////////////////// LZW //////////////////////////////////
 
