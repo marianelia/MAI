@@ -7,8 +7,7 @@
 
 class ARIFM {
 
-protected:
-    
+protected:  
     //how many bits will be used for encoding
     const unsigned int codeBits = 32; 
 
@@ -16,7 +15,6 @@ protected:
     const unsigned int EOF_sybol = noOfChar + 1;
     const unsigned int noOfSymbols = noOfChar + 1;
     
-
     // swap zone for updating tables freq and cum-freq
     std::vector<unsigned long> charToIndex = std::vector<unsigned long>(noOfChar); 
     std::vector<unsigned char> indexToChar = std::vector<unsigned char>(noOfSymbols + 1);
@@ -36,7 +34,6 @@ protected:
 
     unsigned long l; // left bound
     unsigned long h; // right bound
-
 
     unsigned long firstQrt;
     unsigned long half;
@@ -64,16 +61,12 @@ protected:
     unsigned long value = 0;
 
 public:
-
     ARIFM();
-    
     void EncodeArifm(std::istream& inputData, std::ostream& outputData);
     void DecodeArifm(std::istream& inputData, std::ostream& outputData);
-
 };
 
 ARIFM::ARIFM() {
-
     bufferSize = 60000;
     inputEncode.resize(bufferSize);
     inputDecode.resize(bufferSize);
@@ -91,7 +84,6 @@ ARIFM::ARIFM() {
         charToIndex[i] = i+1;     
         indexToChar[i+1] = i;
     }
-
     int cf = noOfSymbols;
     for(unsigned int i = 0; i <= noOfSymbols; i++) {
        cumFrequency[i] = cf--;
@@ -101,11 +93,10 @@ ARIFM::ARIFM() {
 }
 
 void ARIFM::EncodeArifm(std::istream& inputData, std::ostream& outputData) {
-
     bitsToGo = 16;
     buffer = 0;
     bitsToFollow = 0;
-
+    
     while(inputData) {
         (inputData).read(reinterpret_cast<char*>(&inputEncode[0]), bufferSize*sizeof(unsigned char));
         unsigned long long readSize = (inputData).gcount(); 
@@ -140,7 +131,6 @@ void ARIFM::CodeSymbol(unsigned long input_ch, std::ostream& outputData) {
     unsigned long tmp = l;
     l = tmp + (((h-tmp+1)*cumFrequency[input_ch])/cumFrequency[0]);
     h = tmp + (((h-tmp+1)*cumFrequency[input_ch-1])/cumFrequency[0]) - 1;
-
     for(;;) {
         if (h < half) {
             BitPlusFollow(0, outputData);
@@ -160,7 +150,6 @@ void ARIFM::CodeSymbol(unsigned long input_ch, std::ostream& outputData) {
 }
 
 void ARIFM::UpdateModel(unsigned long symbol) {
-
     // updating model
     int index = 0;
     if (cumFrequency[0] >= maxFrequency) { 
@@ -183,7 +172,6 @@ void ARIFM::UpdateModel(unsigned long symbol) {
         charToIndex[ch_i] = symbol;
         charToIndex[ch_symbol] = index;
     } 
-
     // updating tables 
     frequency[index]++; 
     while(index > 0) {
@@ -192,9 +180,7 @@ void ARIFM::UpdateModel(unsigned long symbol) {
     }
 }
 
-
 void ARIFM::DecodeArifm(std::istream& inputData, std::ostream& outputData) {
-    
     bitsToGo = 0;
     garbageBits = 0;
     value = 0;
@@ -205,7 +191,6 @@ void ARIFM::DecodeArifm(std::istream& inputData, std::ostream& outputData) {
         // divide by 2, unsigned short 2 bytes
         inputDecode.resize(readSize/2);
         buffercounter = 0;
-        
         value = 0;
         for (unsigned int i = 0; i < codeBits; i++){
             value = 2*value + input_bit(inputData);
@@ -231,8 +216,7 @@ void ARIFM::DecodeArifm(std::istream& inputData, std::ostream& outputData) {
 unsigned long long ARIFM::DecodeSymbol(std::istream& inputData) {
     unsigned long long cum = (((value - l) + 1) * cumFrequency[0] - 1)/((h - l) + 1);
     unsigned long long i = 1; 
-    while (cumFrequency[i] > cum) i++;
-
+    while (cumFrequency[i] > cum) { i++; }
     unsigned long long tmp = l;
     l = tmp + ((h - tmp + 1)*cumFrequency[i])/cumFrequency[0];
     h = tmp + ((h - tmp + 1)*cumFrequency[i-1])/cumFrequency[0] - 1;
@@ -254,7 +238,6 @@ unsigned long long ARIFM::DecodeSymbol(std::istream& inputData) {
         h = 2*h+1;
         value = 2*value + input_bit(inputData); 
     }
-
     return i;
 }
 
